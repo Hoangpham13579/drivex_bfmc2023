@@ -1,6 +1,6 @@
 #pragma once
 
-// The Rc car model name in the Gazebo simulator
+// The Rc car model name in the Gazebo drivex_bfmc2023
 #define RC_CAR_NAME "rcCar"
 
 // The maximum ditance from the selected zones which will trigger the pedestrian

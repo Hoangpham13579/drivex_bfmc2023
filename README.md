@@ -13,7 +13,7 @@ To setup environment, please insert in your .bashrc/
 export GAZEBO_MODEL_PATH="`rospack find drivex_driving`/models:${GAZEBO_MODEL_PATH}"
 export DRIVEX_DRIVING="`rospack find drivex_driving`"
 
-# BFMC simulator setup
+# BFMC drivex_bfmc2023 setup
 export GAZEBO_MODEL_PATH="`rospack find drivex_driving`:$GAZEBO_MODEL_PATH"
 export ROS_PACKAGE_PATH="*Your path*/drivex_bfmc2023/src:$ROS_PACKAGE_PATH"
 ```

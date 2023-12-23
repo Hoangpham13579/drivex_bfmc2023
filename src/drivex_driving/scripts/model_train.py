@@ -3,7 +3,7 @@
 # Imports
 import argparse
 import os
-# os.environ['DRIVEX_DRIVING'] = '/home/hoang/catkin_ws/src/Simulator/src/drivex_driving'
+# os.environ['DRIVEX_DRIVING'] = '/home/hoang/catkin_ws/src/drivex_bfmc2023/src/drivex_driving'
 os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = '/usr/lib/x86_64-linux-gnu/qt5/plugins/platforms/'
 
 from statistics import mean
