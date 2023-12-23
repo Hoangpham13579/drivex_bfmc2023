@@ -1,4 +1,4 @@
-<img src="https://github.com/ECC-BFMC/Simulator/blob/main/drivex_sim.png" width=30% height=30%>
+<img src="https://github.com/Hoangpham13579/drivex_bfmc2023/blob/7047ca1919d652c1c4906135ad6ece62a107b6f1/drivex_sim.png" width=30% height=30%>
 
 # Drivex_VGU team BFMC 2023
 
