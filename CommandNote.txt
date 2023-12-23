@@ -1,0 +1,18 @@
+1. Training the model
+python3 model_train.py --dataset_name *dataset's folder name* --folder_name *model's folder name*
+
+2. Perform the driving with ML
+roslaunch drivex_main map_with_cardrivex.launch
+roslaunch drivex_main main_driving.launch model_name:=*model's folder name*
+(Debug)
+rm -rf ~/.gazebo/models/* && roslaunch drivex_main map_with_cardrivex.launch
+
+- Collect dataset
+roslaunch drivex_driving dataset_writing.launch
+
+3. Some useful commands
+  - View camera from the car robot
+rosrun image_view image_view image:=/top_front_camera/rgb/image_raw
+
+Current bug
+- ML model already published data to topic /model_steering based on the camera input. BUT it looks like the car doesn't use data from topic /model_steering, maybe another topic instead?  --> Fix DONE!!!

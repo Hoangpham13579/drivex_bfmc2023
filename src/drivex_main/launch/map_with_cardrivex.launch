@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+  <launch>
+  <!-- Inisualize MAP -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name"   value="$(find drivex_main)/worlds/world_with_separators.world"/>
+    <arg name="paused"       value="false"/>    
+    <arg name="use_sim_time" value="true"/>
+    <arg name="debug"        value="false"/>
+    <arg name="gui"          value="true"/>
+  </include>
+
+  <!-- Environments -->
+
+  <!-- Spawn the car with its features  -->
+  <include file="$(find drivex_showcar)/launch/showcar.launch"/>
+
+  </launch>

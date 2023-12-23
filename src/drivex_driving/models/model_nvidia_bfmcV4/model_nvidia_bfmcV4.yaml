@@ -1,0 +1,22 @@
+model:
+  name: model_nvidia_bfmcV4
+  developer: null
+  date: 21-12-2023-01:04:02
+  ml_arch:
+    name: Nvidia_Model()
+    epochs: 250
+    batch_size_val: 64
+    val_loss: 0.26916080713272095
+    tes_loss: 0.006674498785287142
+  model_eval: MSELoss()
+dataset:
+  challenge: driving
+  comments: dataset4
+  date: 20/12/2023 23:18:59 until 20/12/2023 23:27:18
+  developer: hoang
+  environment: gazebo
+  frequency: 30
+  image_number: 13682
+  image_size: 320,160
+  linear_velocity: 0.5
+  urdf: drivex_ackermann.urdf.xacro

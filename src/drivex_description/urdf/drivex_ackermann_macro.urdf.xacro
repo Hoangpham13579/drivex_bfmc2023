@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:property name="deg_to_rad" value="0.01745329251994329577"/>
+    <xacro:macro name="drivex" params="length width wheel_radius board_height height">
+        <!-- Links: inertial,visual,collision -->
+        <!-- <link name="base_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="2"/>
+                <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+            </inertial>
+            <visual>
+                <origin xyz="${length/2} ${-width/2} ${board_height}" rpy="${90 * deg_to_rad} 0 ${180 * deg_to_rad}"/>
+                <geometry>
+                    <mesh filename="file:///$(find drivex_description)/meshes/chassis.dae"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz=" 0 0 ${-wheel_radius + height/2}"/>
+                <geometry>
+                    <box size="${length} ${width} ${height/2}"/>
+                </geometry>
+            </collision>
+        </link> -->
+
+        <link name="base_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 -0 0"/>
+                <mass value="0.26244"/>
+                <inertia ixx="0.00283444" ixy="0" ixz="0" iyy="0.00039867" iyz="0" izz="0.00323293"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 -0.05" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="file:///$(find drivex_description)/meshes/chassis_bfmc.dae" scale="1 1 1"/>
+                </geometry>
+                <material name="material">
+                    <color rgba="0.85 0.85 0.85 1"/>
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 ${-wheel_radius + height/2}"/>
+                <geometry>
+                    <box size="${length} ${width} ${height/2}"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <!-- In the context of an Ackermann steering vehicle (like a car), the base_footprint would typically be located at the bottom center of the vehicle, between the front and rear wheels. -->
+        <link name="base_footprint">
+            <collision>
+                <origin xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.00000001"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="base_footprint_joint" type="fixed">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <child link="base_link"/>
+            <parent link="base_footprint"/>
+        </joint>
+
+        <!-- Car Body -->
+        <link name="carbody_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="1"/>
+                <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 -0.06" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="file:///$(find drivex_description)/meshes/CarBody_bfmc.dae" scale="1 1 1"/>
+                </geometry>
+                <material name="CarBody">
+                    <color rgba="1 1 1 1"/>
+                </material>
+            </visual>
+        </link>
+        <joint name="carbody_to_base_footprint" type="fixed">
+            <parent link="base_link"/>
+            <child link="carbody_link"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </joint>
+
+    </xacro:macro>
+</robot>
