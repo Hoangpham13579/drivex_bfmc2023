@@ -4,6 +4,8 @@
 
 Drivex_VGU, an autonomous RC car with scaled 1:10 for Bosch Future Mobility Challenge (BFMC)
 
+Link for OS and ROS installation [wiki](https://github.com/AutoMecUA/AutoMec-AD/wiki/Users'-guide-to-Software-installation) from [AutoMec-AD](https://github.com/AutomecUA/AutoMec-AD) dependencies github installation
+
 ## Quick step-by-step
 To setup environment, please insert in your .bashrc/
 
@@ -15,7 +17,13 @@ export DRIVEX_DRIVING="`rospack find drivex_driving`"
 export GAZEBO_MODEL_PATH="`rospack find drivex_driving`:$GAZEBO_MODEL_PATH"
 export ROS_PACKAGE_PATH="*Your path*/drivex_bfmc2023/src:$ROS_PACKAGE_PATH"
 ```
-Then type ```source ~/.bashrc```
+Then type 
+```
+source ~/.bashrc
+
+# Move to catkin workspace & run
+catkin_make
+```
 
 And please install the following dependencies:
 
