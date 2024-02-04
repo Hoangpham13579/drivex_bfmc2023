@@ -4,14 +4,14 @@
   <!-- <arg name="image_signal_topic" default="/bottom_front_camera/image_raw"/> -->
   <arg name="twist_cmd_topic" default="/cmd_vel"/>
   <arg name="signal_cmd_topic" default="/signal_detected"/>
-  <arg name="model_steering_topic" default="/model_steering"/>
+  <arg name="model_steering_velocity_topic" default="/model_steering_velocity"/>
   <arg name="crosswalk_sureness_topic" default="/crosswalk_sureness"/>
   <arg name="model_name" default=""/>
   <arg name="mask_mode" default="True"/>
 
   <include file="$(find drivex_driving)/launch/ml_driving.launch">
     <arg name="image_raw_topic" value="$(arg image_raw_topic)" />
-    <arg name="model_steering_topic" value="$(arg model_steering_topic)"/>
+    <arg name="model_steering_velocity_topic" value="$(arg model_steering_velocity_topic)"/>
     <arg name="model_name" value="$(arg model_name)"/>
   </include>
 
@@ -31,7 +31,7 @@
     <arg name="twist_cmd_topic" value="$(arg twist_cmd_topic)"/>
     <arg name="signal_cmd_topic" value="$(arg signal_cmd_topic)"/>
     <arg name="crosswalk_sureness_topic" value="$(arg crosswalk_sureness_topic)"/>
-    <arg name="model_steering_topic" value="$(arg model_steering_topic)"/>
+    <arg name="model_steering_velocity_topic" value="$(arg model_steering_velocity_topic)"/>
   </include>
 
 </launch>

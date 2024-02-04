@@ -1,78 +1,76 @@
-
 <launch>
-    <arg name="urdf" default="drivex_ackermann" doc="urdf used for robot description"/>
-    <arg name="visualize" default="false" doc="launches rviz to visualize sensor data"/>
-    <arg name="sim" default="true" doc="launch a simulated environment"/>
-    <arg name="controller" default="true" doc="control the robot with a controller"/>
+    <arg name="urdf" default="drivex_ackermann" doc="urdf used for robot description" />
+    <arg name="visualize" default="false" doc="launches rviz to visualize sensor data" />
+    <arg name="sim" default="true" doc="launch a simulated environment" />
+    <arg name="controller" default="true" doc="control the robot with a controller" />
     <!-- Modify maximum car's velocity -->
-    <arg name="linear_velocity" default="0.5" doc="linear_velocity of the robot"/>  
-    <arg name="joy_number" default="0" doc="Number of js device to use as controller"/>
+    <arg name="linear_velocity" default="1" doc="linear_velocity of the robot" />
+    <arg name="joy_number" default="0" doc="Number of js device to use as controller" />
 
     <!-- Set global parameteres -->
-    <param name="simulated_environment" type="bool" value="$(arg sim)"/>
-    <param name="used_urdf" type="string" value="$(arg urdf)"/>
-    <param name="linear_velocity" type="string" value="$(arg linear_velocity)"/>
+    <param name="simulated_environment" type="bool" value="$(arg sim)" />
+    <param name="used_urdf" type="string" value="$(arg urdf)" />
+    <param name="linear_velocity" type="string" value="$(arg linear_velocity)" />
 
     <!-- Initialize car model -->
     <include file="$(find drivex_showcar)/launch/include/model.launch">
-        <arg name="urdf" value="$(arg urdf)"/>
+        <arg name="urdf" value="$(arg urdf)" />
     </include>
-
-    <!-- Initialize twist cap -->
-    <include file="$(find drivex_showcar)/launch/include/twist_cap.launch"/>
-
-    <!-- Initialize vel repeater -->
-    <include file="$(find drivex_showcar)/launch/include/vel_repeater.launch"/>
 
     <!-- start visualization with rviz-->
     <group if="$(arg visualize)">
-        <include file="$(find drivex_showcar)/launch/include/visualize.launch"/>
+        <include file="$(find drivex_showcar)/launch/include/visualize.launch" />
     </group>
 
-    <!-- defining way of controlling-->
-    <include if="$(arg controller)" file="$(find drivex_showcar)/launch/include/joy_teleop.launch"> 
+    <!-- Initialize twist cap -->
+    <!-- (Note) If disable it, the car doesn't move, twist_cap publishs to /cmd_vel_tmp topic via
+    twist_cmd_topic variable -->
+    <include file="$(find drivex_showcar)/launch/include/twist_cap.launch" />
+
+    <!-- Initialize vel repeater -->
+    <!-- (Note) listen to topic /cmd_vel_tmp, get data & publish to /cmd_vel -> Ensure that twist
+    mess of /cmd_vel topic are being published continuously, even if the original source of the
+    messages stops publishing -->
+    <include file="$(find drivex_showcar)/launch/include/vel_repeater.launch" />
+
+    <!-- Joy stick Controller-->
+    <!-- <include if="$(arg controller)" file="$(find
+    drivex_showcar)/launch/include/joy_teleop.launch"> 
         <arg name="joy_number" value="$(arg joy_number)"/>
-    </include>
-    
-    <!-- <group unless="$(arg controller)">
-        <node if="$(arg sim)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering"/>
-    </group> -->
+    </include> -->
+
+    <!-- Keyboard controller -->
+    <include file="$(find drivex_showcar)/launch/include/keyboard_teleop.launch" />
 
     <group if="$(arg sim)">
         <!-- Load Controller -->
-        <rosparam command="load" file="$(find drivex_description)/config/drivex_steering_params.yaml"/>
-        <node 
-            name="controller_spawner" 
-            pkg="controller_manager" 
+        <rosparam command="load"
+            file="$(find drivex_description)/config/drivex_steering_params.yaml" />
+        <node
+            name="controller_spawner"
+            pkg="controller_manager"
             type="spawner"
             args="  joint_state_publisher
                     ackermann_steering_controller">
         </node>
-        <rosparam command="load" file="$(find drivex_description)/config/gains.yaml"/>
+        <rosparam command="load" file="$(find drivex_description)/config/gains.yaml" />
         <rosparam command="load" file="$(find drivex_description)/config/drivex_hw_sim.yaml" />
 
         <!-- Including robots spawn -->
-        <include file="$(find drivex_showcar)/launch/include/spawn.launch"/>
+        <include file="$(find drivex_showcar)/launch/include/spawn.launch" />
     </group>
 
     <group unless="$(arg sim)">
         <!-- RGB sensors -->
         <include file="$(find drivex_showcar)/launch/include/rgb.launch">
-            <arg name="frame_id" value="bottom_front_camera"/>
+            <arg name="frame_id" value="bottom_front_camera" />
         </include>
 
-        <!-- Kinect sensors -->
-        <!-- <include file="$(find drivex_showcar)/launch/include/kinect.launch">
-            <arg name="frame_id" value="top_front_camera"/>
-        </include> -->
-
         <!-- Connect with microcontroller -->
-        <include file="$(find drivex_showcar)/launch/include/rosserial.launch"/>
+        <include file="$(find drivex_showcar)/launch/include/rosserial.launch" />
 
         <!-- Convert twist inputs to int outputs -->
-        <include file="$(find drivex_showcar)/launch/include/twist_to_int_conversor.launch"/>
-
-        
+        <include file="$(find drivex_showcar)/launch/include/twist_to_int_conversor.launch" />
     </group>
 
 </launch>

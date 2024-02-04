@@ -41,7 +41,7 @@ class InceptionV3(nn.Module):
             nn.Linear(2048, 1024),
             nn.ReLU(),
             nn.Dropout(0.2),
-            nn.Linear(1024, 1),
+            nn.Linear(1024, 2),
             nn.Sigmoid()
         )
 

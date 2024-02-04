@@ -1,0 +1,11 @@
+<launch>
+  <arg name="twist_cmd_vel" default="/cmd_vel"/>
+  <arg name="keyboard_topic" default="/keyboard_cmd"/>
+
+  <!-- Connect keyboard to the car in simulator -->
+  <node name="keyboard_teleop" pkg="drivex_showcar" type="keyboard_teleop.py" output="screen">
+    <param name="twist_cmd_vel" value="$(arg twist_cmd_vel)"/>
+    <param name="keyboard_topic" value="$(arg keyboard_topic)"/>
+  </node>
+
+</launch>

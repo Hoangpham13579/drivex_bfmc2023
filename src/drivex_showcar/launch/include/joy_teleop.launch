@@ -4,11 +4,13 @@
   <arg name="joy_number" default="0"/>
   <arg name="deadzone" default="0"/>
 
+  <!-- Enable joy stick -->
   <node name="joy" pkg="joy" type="joy_node">
     <param name="dev" value="/dev/input/js$(arg joy_number)"/>
     <param name="deadzone" value="$(arg deadzone)"/>
   </node>
 
+  <!-- Connect joy stick to the car -->
   <node name="joy_teleop" pkg="drivex_showcar" type="joy_teleop.py" output="screen">
     <param name="twist_cmd_topic" value="$(arg twist_cmd_topic)"/>
     <param name="joy_topic" value="$(arg joy_topic)"/>

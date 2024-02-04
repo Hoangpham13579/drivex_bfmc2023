@@ -61,9 +61,9 @@ roslaunch drivex_main map_with_cardrivex.launch
 
 To make the car run
 ```
-roslaunch drivex_main main_driving.launch model_name:=model_nvidia_bfmcV4
+roslaunch drivex_main main_driving.launch model_name:=nvidia_speedSteerV1
 ```
-Note that **model_nvidia_bfmcV4** is the name of folder's model in package **drivex_driving**
+Note that **nvidia_speedSteerV1** is the name of folder's model in package **drivex_driving**
 
 To collect the dataset
 ```

@@ -32,7 +32,7 @@
             <visual>
                 <origin xyz="0 0 -0.05" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="file:///$(find drivex_description)/meshes/chassis_bfmc.dae" scale="1 1 1"/>
+                    <mesh filename="file:///$(find drivex_description)/meshes/chassis.dae" scale="1 1 1"/>
                 </geometry>
                 <material name="material">
                     <color rgba="0.85 0.85 0.85 1"/>
@@ -71,7 +71,7 @@
             <visual>
                 <origin xyz="0 0 -0.06" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="file:///$(find drivex_description)/meshes/CarBody_bfmc.dae" scale="1 1 1"/>
+                    <mesh filename="file:///$(find drivex_description)/meshes/CarBody.dae" scale="1 1 1"/>
                 </geometry>
                 <material name="CarBody">
                     <color rgba="1 1 1 1"/>

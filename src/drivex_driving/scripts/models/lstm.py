@@ -90,7 +90,7 @@ class LSTM(nn.Module):
         self.lstm = nn.LSTM(input_size=128, hidden_size=hidden_dim,
                           num_layers=self.num_layers, batch_first=True) #lstm
 
-        self.linear = nn.Linear(hidden_dim, 1)
+        self.linear = nn.Linear(hidden_dim, 2)  # Speed & Steering Angle
 
         self.dropout = nn.Dropout(dropout)
         

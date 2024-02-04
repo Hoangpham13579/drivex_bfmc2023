@@ -1,7 +1,7 @@
 <launch>
 
   <arg name="image_raw_topic" default="/bottom_front_camera/image_raw"/>
-  <arg name="model_steering_topic" default="/model_steering"/>
+  <arg name="model_steering_velocity_topic" default="/model_steering_velocity"/>
   <arg name="model_name" default=""/>
 
   <!-- Set global parameteres -->
@@ -9,7 +9,7 @@
   
   <node name="ml_driving" pkg="drivex_driving" type="ml_driving.py" output="screen" required="true" >
     <param name="image_raw_topic" value="$(arg image_raw_topic)" />
-    <param name="model_steering_topic" value="$(arg model_steering_topic)"/>
+    <param name="model_steering_velocity_topic" value="$(arg model_steering_velocity_topic)"/>
   </node>
   
 </launch>

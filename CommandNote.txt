@@ -1,5 +1,7 @@
 1. Training the model
-python3 model_train.py --dataset_name *dataset's folder name* --folder_name *model's folder name*
+python3 model_train.py --dataset_name *dataset's folder name* --folder_name *model's folder name* --model "Nvidia_Model()"
+
+python3 model_train.py --dataset_name gazebo-03-02-16h18m31s --folder_name model_nvidia_bfmcV1 --model "Nvidia_Model()"
 
 2. Perform the driving with ML
 roslaunch drivex_main map_with_cardrivex.launch

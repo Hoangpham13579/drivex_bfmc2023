@@ -23,7 +23,7 @@ class Dataset(torch.utils.data.Dataset):
         images_path = dataset_path + '/IMG/'
         self.image_filenames_original = images_path + dataset['img_name']
         self.image_filenames_original = self.image_filenames_original.values.tolist()
-        self.labels_original = dataset['steering'].values.tolist()
+        self.labels_original = dataset[['steering', 'velocity']].values.tolist()
         self.num_images= len(self.image_filenames_original)
         self.image_width = 256
         self.image_height = 256
@@ -45,7 +45,7 @@ class Dataset(torch.utils.data.Dataset):
 
         return img 
 
-    def augmentImage(self,imgPath, steering):
+    def augmentImage(self,imgPath, label):
         # Function: Add randomness to the data set by applying random "filters"
         img = Image.open(imgPath)
 
@@ -59,7 +59,7 @@ class Dataset(torch.utils.data.Dataset):
             img = pan.augment_image(img)  # Add a pan to img 5555 5   
 
         # Zoom 
-        if np.random.rand() < 0.30:
+        if np.random.rand() < 0.10:
             zoom = iaa.Affine(scale=(1, 1.2))
             img = zoom.augment_image(img)
 
@@ -96,9 +96,9 @@ class Dataset(torch.utils.data.Dataset):
         # Flip
         if np.random.rand() < 0.30:
             img = cv2.flip(img, 1)  
-            steering = - steering
+            label[0] = - label[0]
 
-        return img, steering
+        return img, label
 
     def __getitem__(self,index): # returns a specific x,y of the datasets
         # Get the image
@@ -110,6 +110,7 @@ class Dataset(torch.utils.data.Dataset):
             label = self.labels_original[index]
         image = self.pre_processing(image, self.image_width, self.image_height)
         image = self.transforms(image)
+        label = torch.tensor(label, dtype=torch.float32)
 
         return image , label
        

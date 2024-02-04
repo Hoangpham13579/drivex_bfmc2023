@@ -1,0 +1,22 @@
+model:
+  name: nvidia_speedSteerV1
+  developer: null
+  date: 04-02-2024-10:09:30
+  ml_arch:
+    name: Nvidia_Model()
+    epochs: 165
+    batch_size_val: 16
+    val_loss: 0.009916573762893677
+    tes_loss: 0.005503465421497822
+  model_eval: MSELoss()
+dataset:
+  challenge: driving
+  comments: dataset1
+  date: 03/02/2024 16:18:31 until 03/02/2024 16:22:32
+  developer: hoang
+  environment: gazebo
+  frequency: 30
+  image_number: 6449
+  image_size: 320,160
+  linear_velocity: 1.0
+  urdf: drivex_ackermann.urdf.xacro

@@ -34,7 +34,7 @@ def main():
     # Initiating node
     rospy.init_node("joystick_to_android", anonymous=False)
 
-    # Get parameters
+    # Get "twist_cmd_topic" parameters
     twist_cmd_topic = rospy.get_param("~twist_cmd_topic", "/cmd_vel")
     joy_topic = rospy.get_param("~joy_topic", "/joy")
 

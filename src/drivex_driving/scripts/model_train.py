@@ -138,10 +138,7 @@ def main():
     # Image dataset paths
     dataset_path = f'{files_path}/datasets/{args["dataset_name"]}/'
     columns = ["img_name", "steering", "velocity"]
-    df = pd.read_csv(os.path.join(dataset_path, "driving_log.csv"), names=columns)
-
-    del df["velocity"]  # not in use, currently
-    df.head()
+    df = pd.read_csv(os.path.join(dataset_path, "driving_log.csv"), names=columns, index_col=False)
 
     # Read YAML file
     with open(dataset_path + "info.yaml", "r") as stream:
@@ -189,6 +186,10 @@ def main():
     # Sample ony a few images for development
     # df = df[0:700]
     train_dataset, test_dataset = train_test_split(df, test_size=0.2)
+    # print("\nData Frame: \n", df.head())
+    # print("Test dataset: \n", test_dataset.head())
+    # print("Train dataset: \n", train_dataset.head())
+    
     # Creates the train dataset
     dataset_train = Dataset(train_dataset, dataset_path)
     # Creates the batch size that suits the amount of memory the graphics can handle
@@ -312,11 +313,13 @@ def main():
         ):
             # Move the data to the GPU if one exists
             image_t = image_t.to(device=device, dtype=torch.float)
-            label_t = label_t.to(device=device, dtype=torch.float).unsqueeze(1)
+            # label_t = label_t.to(device=device, dtype=torch.float).unsqueeze(1)
+            label_t = label_t.to(device=device, dtype=torch.float)
 
             # Apply the network to get the predicted ys
             label_t_predicted = model(image_t)
-
+            # label_t: [16, 2], label_t_predicted: [16, 2]
+            
             # Compute the error based on the predictions
             loss = loss_function(label_t_predicted, label_t)
 
@@ -344,7 +347,8 @@ def main():
         ):
             # Move the data to the gpu if one exists
             image_t = image_t.to(device=device, dtype=torch.float)
-            label_t = label_t.to(device=device, dtype=torch.float).unsqueeze(1)
+            # label_t = label_t.to(device=device, dtype=torch.float).unsqueeze(1)
+            label_t = label_t.to(device=device, dtype=torch.float)
 
             # Apply the network to get the predicted ys
             label_t_predicted = model(image_t)
@@ -504,7 +508,7 @@ def main():
         ########################################
         # Checkpoint                           #
         ########################################
-        if idx_epoch % 10 == 0:
+        if idx_epoch % 1 == 0:
             print(
                 Fore.CYAN
                 + "Verifying if the new model is better than the previous one stored"

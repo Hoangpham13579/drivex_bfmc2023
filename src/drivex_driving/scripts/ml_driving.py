@@ -10,6 +10,7 @@ import rospy
 import yaml
 from sensor_msgs.msg._Image import Image
 from std_msgs.msg import Float32, String
+import json
 from cv_bridge.core import CvBridge
 import torch
 from torchvision import transforms
@@ -63,6 +64,7 @@ def modelSteeringCallback(message, config):
     model.eval()
     config["model"] = model
 
+
 def main():
     config: dict[str, Any] = dict(vel=None, img_rgb=None, bridge=None, begin_img=None)
     # Defining starting values
@@ -77,7 +79,9 @@ def main():
     image_raw_topic = rospy.get_param(
         "~image_raw_topic", "/bottom_front_camera/image_raw"
     )
-    model_steering_topic = rospy.get_param("~model_steering_topic", "/model_steering")
+    model_steering_velocity_topic = rospy.get_param(
+        "~model_steering_velocity_topic", "/model_steering_velocity"
+    )
     model_name = rospy.get_param("/model_name", "")
 
     # Defining path to model
@@ -104,7 +108,9 @@ def main():
     # Subscribe and publish topics
     rospy.Subscriber(image_raw_topic, Image, imgRgbCallback_part)
     rospy.Subscriber("/set_model", String, changeModelCallback)
-    model_steering_pub = rospy.Publisher(model_steering_topic, Float32, queue_size=10)
+    model_steering_pub = rospy.Publisher(
+        model_steering_velocity_topic, String, queue_size=10
+    )
 
     # Frames per second
     rate = rospy.Rate(30)
@@ -121,10 +127,13 @@ def main():
         image = PIL_to_Tensor(image)
         image = image.unsqueeze(0)
         image = image.to(device, dtype=torch.float)
-        label_t_predicted = config["model"].forward(image)
-        steering = float(label_t_predicted)
-        # Publish angle
-        model_steering_pub.publish(steering)
+        model_pred = config["model"].forward(image)
+        steering, velocity = float(model_pred[0][0]), float(model_pred[0][1])
+        model_steer_velocity = json.dumps(
+            {"steering": f'{float(steering)}', "velocity": f'{float(velocity)}'}
+        )
+        # Publish Steering Angle & Velocity
+        model_steering_pub.publish(model_steer_velocity)
         rate.sleep()
 
 

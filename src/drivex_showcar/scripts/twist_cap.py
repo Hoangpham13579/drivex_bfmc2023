@@ -12,12 +12,9 @@ def twistMsgCallback(message, **kwargs):
     Twist Callback Function
     """
     linear = float(message.linear.x)
-
-    if linear > 0:
+    # Max Speed
+    if linear > float(kwargs['linear_velocity']):
         message.linear.x = float(kwargs['linear_velocity'])
-
-    else:
-        message.linear.x = 0
 
     # Publish messages
     kwargs['PubTwist'].publish(message)
@@ -29,7 +26,7 @@ def main():
     rospy.init_node('twist_cap', anonymous=False)
 
     # Get parameters
-    velocity = rospy.get_param('/linear_velocity', '1') 
+    velocity = rospy.get_param('/linear_velocity', '0.5') 
     twist_input_topic = rospy.get_param('~twist_input_topic', '/cmd_vel') 
     twist_tmp_topic = rospy.get_param('~twist_tmp_topic', '/cmd_vel_tmp') 
 

@@ -50,7 +50,7 @@ class Nvidia_Model(nn.Module):
         self.fc1 = nn.Linear(5184,100)
         self.fc2 = nn.Linear(100,50)
         self.fc3= nn.Linear(50,10)
-        self.fc4= nn.Linear(10,1)
+        self.fc4= nn.Linear(10,2)  # Speed & Steering Angle
         self.relu = nn.ReLU()
         self.elu = nn.ELU()
         

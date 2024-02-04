@@ -13,6 +13,8 @@ from time import sleep
 from geometry_msgs.msg._Twist import Twist
 from sensor_msgs.msg._Image import Image
 from std_msgs.msg import String, Float32
+import json
+import sys
 import rospkg
 from cv_bridge.core import CvBridge
 
@@ -39,10 +41,12 @@ def cv2PutText(img: np.ndarray, text: str) -> np.ndarray:
     )
 
 
-def modelSteeringCallback(message, config):
-    config["steering"] = message.data
-
-
+def modelSteeringVelocityCallback(message, config):
+    data = json.loads(message.data)
+    config["steering"] = float(data['steering'])
+    config["velocity"] = float(data['velocity'])
+    
+    
 def crosswalkSurenessCallback(message, config):
     config["crosswalk"] = message.data
 
@@ -83,7 +87,7 @@ def main():
 
     # Defining starting values
     config["begin_img"] = False
-    config["vel"] = 0
+    config["velocity"] = 0
     config["crosswalk"] = 0
     config["steering"] = 0
     config["bridge"] = CvBridge()
@@ -104,7 +108,7 @@ def main():
     crosswalk_sureness_topic = rospy.get_param(
         "~crosswalk_sureness_topic", "/crosswalk_sureness"
     )
-    model_steering_topic = rospy.get_param("~model_steering_topic", "/model_steering")
+    model_steering_velocity_topic = rospy.get_param("~model_steering_velocity_topic", "/model_steering_velocity")
 
     # Define cv2 windows
     win_name = "Robot View"
@@ -121,13 +125,13 @@ def main():
     # Partials
     signalCallback_part = partial(signalCallback, config=config)
     crosswalkSurenessCallback_part = partial(crosswalkSurenessCallback, config=config)
-    modelSteeringCallback_part = partial(modelSteeringCallback, config=config)
+    modelSteeringVelocityCallback_part = partial(modelSteeringVelocityCallback, config=config)
     imgRgbCallback_part = partial(imgRgbCallback, config=config)
 
     # Subscribe and publish topics
     rospy.Subscriber(signal_cmd_topic, String, signalCallback_part)
     rospy.Subscriber(crosswalk_sureness_topic, Float32, crosswalkSurenessCallback_part)
-    rospy.Subscriber(model_steering_topic, Float32, modelSteeringCallback_part)
+    rospy.Subscriber(model_steering_velocity_topic, String, modelSteeringVelocityCallback_part)
     rospy.Subscriber(image_raw_topic, Image, imgRgbCallback_part)
     twist_pub = rospy.Publisher(twist_cmd_topic, Twist, queue_size=10)
 
@@ -145,24 +149,23 @@ def main():
         cv2.imshow(win_name, config["img_rgb"])
         key = cv2.waitKey(1)
 
-        # Depending on the message from the callback, choose what to do
-        if config["signal"] == "pForward" and config["vel"] != linear_velocity:
-            print("Detected pForward, moving forward")
-            config["vel"] = linear_velocity
-        elif config["signal"] == "pStop" and config["crosswalk"] > crosswalk_threshold:
-            sleep(crosswalk_threshold)
-            config["vel"] = 0
-            print("Detected pStop, stopping")
-        elif config["signal"] == "pChess" and config["crosswalk"] > crosswalk_threshold:
-            sleep(crosswalk_timeout)
-            gracefulStop(twist, twist_pub)
-            config["vel"] = 0
-            print("Detected chessboard, stopping the program")
-            exit(0)
+        # # Depending on the message from the callback, choose what to do
+        # if config["signal"] == "pForward" and config["vel"] != linear_velocity:
+        #     print("Detected pForward, moving forward")
+        #     config["vel"] = linear_velocity
+        # elif config["signal"] == "pStop" and config["crosswalk"] > crosswalk_threshold:
+        #     sleep(crosswalk_threshold)
+        #     config["vel"] = 0
+        #     print("Detected pStop, stopping")
+        # elif config["signal"] == "pChess" and config["crosswalk"] > crosswalk_threshold:
+        #     sleep(crosswalk_timeout)
+        #     gracefulStop(twist, twist_pub)
+        #     config["vel"] = 0
+        #     print("Detected chessboard, stopping the program")
+        #     exit(0)
 
         # Send twist
-        config["vel"] = linear_velocity  # FIX
-        twist.linear.x = config["vel"]
+        twist.linear.x = config["velocity"]
         twist.linear.y = 0
         twist.linear.z = 0
         twist.angular.x = 0
