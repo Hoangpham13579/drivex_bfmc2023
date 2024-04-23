@@ -1,10 +1,12 @@
-<img src="https://github.com/Hoangpham13579/drivex_bfmc2023/blob/7047ca1919d652c1c4906135ad6ece62a107b6f1/drivex_sim.png" width=80% height=80%>
+# Self-driving (autonomous) RC 1:10 car simulation (BFMC 2023 competition)
 
-# Drivex_VGU team BFMC 2023
+From Drivex_VGU team, an autonomous RC car simulation with scaled 1:10 for Bosch Future Mobility Challenge (BFMC). This Github uses ROS 1 noetic for development
 
-Drivex_VGU, an autonomous RC car with scaled 1:10 for Bosch Future Mobility Challenge (BFMC)
+<img src="./images/demo_final_trim.gif" alt="drawing" width="" height=""/>
 
-Link for OS and ROS installation [wiki](https://github.com/AutoMecUA/AutoMec-AD/wiki/Users'-guide-to-Software-installation) from [AutoMec-AD](https://github.com/AutomecUA/AutoMec-AD) dependencies github installation
+## Simulation features
+- Autonomously drive on the designated map (highway, curves, intersection)
+- Apply "Behavioral clonning", taking input from camera and output steering angle and speed 
 
 ## Quick step-by-step
 To install odometry packages
@@ -23,7 +25,7 @@ git switch melodic-devel
 catkin_make
 ```
 
-To setup environment, please insert in your .bashrc/
+To setup environment, please insert the bellow variables in your ~/.bashrc (note that you should modify the {YOUR_USER} to your local path)
 
 ```
 source ~/catkin_ws/devel/setup.bash
@@ -54,7 +56,7 @@ pip3 install -r requirements.txt
 ```
 Note that we should **install Pytorch GPU** to run the model for behavioural cloning algorithm. The installation guide of Pytorch GPU on Ubuntu can be found [here](https://www.youtube.com/watch?v=4LvgOmxugFU)
 
-To run the BFMC map & spawn the car
+To spawn the BFMC map & the car
 ```
 roslaunch drivex_main map_with_cardrivex.launch
 ```
@@ -75,7 +77,12 @@ To train the Deep Learning model for behavioural cloning algorithm
 python3 model_train.py --dataset_name {DATASET'S FOLDER NAME} --folder_name {MODEL'S FOLDER NAME}
 ```
 
-To control the car with joy stick (the only option), please install dependencies from [ROS joy stick installation](https://github.com/AutoMecUA/AutoMec-AD/wiki/Users'-guide-to-Software-installation)
+To control the car manually from the keyboard (note that this command should run after spawning the map and the car)
+```
+rosrun drivex_showcar keyboard.py
+```
+
+To control the car with joy stick (the only option), please install dependencies and run the joy stick from [ROS joy stick installation](https://github.com/AutoMecUA/AutoMec-AD/wiki/Users'-guide-to-Software-installation)
 
 ## Reference
 https://github.com/AutomecUA/AutoMec-AD
