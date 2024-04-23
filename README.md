@@ -2,6 +2,8 @@
 
 From Drivex_VGU team, an autonomous RC car simulation with scaled 1:10 for Bosch Future Mobility Challenge (BFMC). This Github uses ROS 1 noetic for development
 
+To view full video demo, please visit [full demo](https://drive.google.com/file/d/12H4Xb3J2VLrR2vHwT21acXhTvu6A2s-H/view)
+
 <img src="./images/demo_final_trim.gif" alt="drawing" width="" height=""/>
 
 ## Simulation features
