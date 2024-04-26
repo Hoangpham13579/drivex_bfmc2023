@@ -1,6 +1,6 @@
-# Self-driving (autonomous) RC 1:10 car simulator (BFMC 2023 competition)
+# Self-driving (autonomous) RC 1:10 car simulator
 
-From Drivex_VGU team, an autonomous RC car simulation with scaled 1:10 for Bosch Future Mobility Challenge (BFMC). This Github uses ROS 1 noetic for development
+From Drivex_VGU team, an autonomous RC car simulation with scaled 1:10. This Github uses ROS 1 noetic for development.
 
 To view full video demo, please visit [full demo](https://drive.google.com/file/d/12H4Xb3J2VLrR2vHwT21acXhTvu6A2s-H/view)
 
@@ -32,11 +32,11 @@ To setup environment, please insert the bellow variables in your ~/.bashrc (note
 ```
 source ~/catkin_ws/devel/setup.bash
 
-# BFMC Simulation setup
+# Simulation setup
 export GAZEBO_MODEL_PATH="/home/{YOUR_USER}/catkin_ws/src/drivex_bfmc2023/src/models_pkg:$GAZEBO_MODEL_PATH"
 export ROS_PACKAGE_PATH="/home/{YOUR_USER}/catkin_ws/src/drivex_bfmc2023/src:$ROS_PACKAGE_PATH"
 
-# BFMC setup
+# setup
 export GAZEBO_MODEL_PATH="`rospack find drivex_driving`/models:${GAZEBO_MODEL_PATH}"
 export DRIVEX_DRIVING="`rospack find drivex_driving`"
 export GAZEBO_MODEL_PATH="`rospack find drivex_driving`:$GAZEBO_MODEL_PATH"
@@ -58,7 +58,7 @@ pip3 install -r requirements.txt
 ```
 Note that we should **install Pytorch GPU** to run the model for behavioural cloning algorithm. The installation guide of Pytorch GPU on Ubuntu can be found [here](https://www.youtube.com/watch?v=4LvgOmxugFU)
 
-To spawn the BFMC map & the car
+To spawn the map & the car
 ```
 roslaunch drivex_main map_with_cardrivex.launch
 ```
