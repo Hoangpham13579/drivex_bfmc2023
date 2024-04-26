@@ -1,4 +1,4 @@
-# Self-driving (autonomous) RC 1:10 car simulator
+# Self-driving car simulator
 
 From Drivex_VGU team, an autonomous RC car simulation with scaled 1:10. This Github uses ROS 1 noetic for development.
 
