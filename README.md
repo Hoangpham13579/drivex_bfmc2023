@@ -1,4 +1,4 @@
-# Self-driving (autonomous) RC 1:10 car simulation (BFMC 2023 competition)
+# Self-driving (autonomous) RC 1:10 car simulator (BFMC 2023 competition)
 
 From Drivex_VGU team, an autonomous RC car simulation with scaled 1:10 for Bosch Future Mobility Challenge (BFMC). This Github uses ROS 1 noetic for development
 
