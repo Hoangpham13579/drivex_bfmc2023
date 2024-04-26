@@ -87,6 +87,8 @@ rosrun drivex_showcar keyboard.py
 To control the car with joy stick (the only option), please install dependencies and run the joy stick from [ROS joy stick installation](https://github.com/AutoMecUA/AutoMec-AD/wiki/Users'-guide-to-Software-installation)
 
 ## Reference
+https://github.com/ECC-BFMC/Simulator
+
 https://github.com/AutomecUA/AutoMec-AD
 
 https://github.com/CIR-KIT/steer_drive_ros.git
